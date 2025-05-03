@@ -77,24 +77,44 @@
 
 /* Base styles */
 body {
+  font-family: 'Oswald', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   font-weight: 300;
 }
 
 /* Typography */
-p {
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
+.ff-oswald, 
+.nav-link,
+h2.display-4 {
+  font-family: 'Oswald', sans-serif;
 }
 
 .nav-link {
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   font-size: 1.1rem;
 }
 
 h2.display-4 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
   font-size: 2.75rem;
   margin-bottom: 2rem;
+}
+
+/* Card styles */
+.card {
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Hero section */
+.bio {
+  max-width: 600px;
+  margin-left: auto;
 }
 
 /* Hero image */
@@ -116,45 +136,75 @@ h2.display-4 {
   font-family: 'Oswald', sans-serif;
   font-weight: 200;
   font-size: 1.1rem;
+  letter-spacing: 0.05em;
   color: var(--bs-secondary);
+  text-transform: uppercase;
   margin-bottom: 0.25rem;
+  min-width: 90px;
 }
 
 .experience-details h3 {
   margin: 0;
-  font-size: 1.25rem;
-  margin-bottom: 0.25rem;
+  font-family: 'Oswald', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  margin-bottom: 0.15rem;
+  letter-spacing: -0.01em;
 }
 
 .experience-details p {
-  margin: 0.25rem 0 0;
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 300;
+  font-size: 0.95rem;
   color: var(--secondary-text-color);
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
+  letter-spacing: 0.01em;
 }
 
 /* Gallery styles */
-#gallery .card {
-  border: none;
-  transition: transform 0.2s ease;
-  max-width: 80%;
-  margin: 0 auto;
+#gallery {
+  padding: 0;
 }
 
-#gallery .card:hover {
-  transform: translateY(-5px);
+#gallery .gallery-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 4px;
+  background: var(--bs-body-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+  height: 100%;
 }
 
-#gallery .card-img-top {
-  aspect-ratio: 3/4;
-  object-fit: cover;
+#gallery .gallery-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#gallery .gallery-item img {
   width: 100%;
   height: auto;
+  display: block;
+  transition: transform 0.3s ease;
 }
 
-/* Adjust gallery grid spacing */
+#gallery .gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Grid spacing adjustments */
 #gallery .row {
-  justify-content: center;
+  margin: -0.5rem;
+}
+
+#gallery [class*="col-"] {
+  padding: 0.5rem;
+}
+
+@media (max-width: 767px) {
+  #gallery h2.display-4 {
+    padding: 2rem 0;
+  }
 }
 
 /* Section scroll margin */
