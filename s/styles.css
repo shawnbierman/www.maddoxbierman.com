@@ -4,9 +4,97 @@
   --secondary-text-color: #666;
 }
 
+/* Theme toggle */
+.navbar-brand {
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.1);
+}
+
+.navbar-brand i {
+  font-size: 2rem;
+  transition: color 0.3s ease;
+}
+
+/* Navbar styles */
+.navbar {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+[data-bs-theme="light"] {
+  --nav-bg: rgba(255, 255, 255, 0.9);
+  --nav-color: #222;
+  --nav-hover: #666;
+  --nav-icon: var(--nav-color);
+  --toggler-color: #222;
+}
+
+[data-bs-theme="dark"] {
+  --nav-bg: rgba(33, 37, 41, 0.9);
+  --nav-color: #fff;
+  --nav-hover: #ccc;
+  --nav-icon: var(--nav-color);
+  --toggler-color: #fff;
+}
+
+.navbar {
+  background-color: var(--nav-bg);
+}
+
+.navbar-brand i,
+.nav-link {
+  color: var(--nav-color) !important;
+}
+
+.nav-link:hover {
+  color: var(--nav-hover) !important;
+}
+
+.navbar-brand i {
+  color: var(--nav-icon) !important;
+}
+
+/* Mobile nav toggler */
+.navbar-toggler {
+  border-color: var(--nav-color);
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ffffff' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+[data-bs-theme="light"] .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23222222' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
 /* Fonts */
 .ff-oswald {
   font-family: 'Oswald', sans-serif;
+}
+
+/* Base styles */
+body {
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Typography */
+p {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.nav-link {
+  font-size: 1.1rem;
+}
+
+h2.display-4 {
+  font-size: 2.75rem;
+  margin-bottom: 2rem;
 }
 
 /* Hero image */
@@ -25,26 +113,32 @@
 }
 
 .experience-year {
-  font-weight: bold;
-  min-width: 4rem;
-  color: var(--text-color);
+  font-family: 'Oswald', sans-serif;
+  font-weight: 200;
+  font-size: 1.1rem;
+  color: var(--bs-secondary);
+  margin-bottom: 0.25rem;
 }
 
 .experience-details h3 {
   margin: 0;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
+  margin-bottom: 0.25rem;
 }
 
 .experience-details p {
   margin: 0.25rem 0 0;
   color: var(--secondary-text-color);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Gallery styles */
 #gallery .card {
   border: none;
   transition: transform 0.2s ease;
+  max-width: 80%;
+  margin: 0 auto;
 }
 
 #gallery .card:hover {
@@ -54,6 +148,13 @@
 #gallery .card-img-top {
   aspect-ratio: 3/4;
   object-fit: cover;
+  width: 100%;
+  height: auto;
+}
+
+/* Adjust gallery grid spacing */
+#gallery .row {
+  justify-content: center;
 }
 
 /* Section scroll margin */
@@ -75,6 +176,10 @@ section[id] {
 
   .experience-year {
     margin-bottom: 0.25rem;
+  }
+
+  #gallery .card {
+    max-width: 90%;
   }
 }
 

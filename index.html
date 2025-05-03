@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="auto">
 
 <head>
   <meta charset="UTF-8">
@@ -9,16 +9,46 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome (local) -->
-  <link rel="stylesheet" href="s/fontawesome.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
 
   <!-- Main Styles -->
   <link rel="stylesheet" href="s/styles.css">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .ff-oswald {
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .nav-link {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    h2.display-4 {
+      font-family: 'Oswald', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .experience-list h3 {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 400;
+    }
+  </style>
 
   <!-- Google Analytics (self-hosted) -->
   <script async src="/j/gtag.js?id=G-199CC8RY7F"></script>
@@ -37,23 +67,21 @@
 
   <!-- Header -->
   <header class="fixed-top">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-opacity-95 py-3">
+    <nav class="navbar navbar-expand-lg py-3">
       <div class="container">
-        <a class="navbar-brand" href="#"><i class="fas fa-masks-theater"></i></a>
+        <a class="navbar-brand" href="#" id="theme-toggle">
+          <i class="fas fa-masks-theater" id="theme-icon"></i>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
+          <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
             <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
           </ul>
-          <button id="theme-toggle" class="btn btn-outline-secondary ms-auto">
-            <i id="theme-icon" class="fas fa-sun"></i>
-          </button>
         </div>
       </div>
     </nav>
@@ -321,21 +349,27 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const btn = document.getElementById('theme-toggle');
-      const icon = document.getElementById('theme-icon');
       const root = document.documentElement;
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-      function updateIcon() {
-        const mode = root.getAttribute('data-bs-theme');
-        icon.classList.toggle('fa-sun', mode === 'dark');
-        icon.classList.toggle('fa-moon', mode === 'light');
+      function setTheme(theme) {
+        root.setAttribute('data-bs-theme', theme);
       }
 
-      updateIcon();
-      btn.addEventListener('click', () => {
+      // Initial theme setup based on system preference
+      setTheme(prefersDark.matches ? 'dark' : 'light');
+
+      // Handle click events - simple toggle between light and dark
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         const current = root.getAttribute('data-bs-theme');
-        const next = current === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-bs-theme', next);
-        updateIcon();
+        const next = current === 'light' ? 'dark' : 'light';
+        setTheme(next);
+      });
+
+      // Listen for system theme changes and update if we haven't manually set a theme
+      prefersDark.addEventListener('change', (e) => {
+        setTheme(e.matches ? 'dark' : 'light');
       });
     });
   </script>
