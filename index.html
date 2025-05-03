@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-bs-theme="dark">
 
 <head>
   <meta charset="UTF-8">
@@ -19,25 +19,41 @@
 
   <!-- Main Styles -->
   <link rel="stylesheet" href="s/styles.css">
+
+  <!-- Google Analytics (self-hosted) -->
+  <script async src="/j/gtag.js?id=G-199CC8RY7F"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-199CC8RY7F', {
+      anonymize_ip: true,
+      page_path: window.location.pathname + window.location.search
+    });
+  </script>
 </head>
 
 <body>
 
   <!-- Header -->
   <header class="fixed-top">
-    <nav class="navbar navbar-expand-lg bg-white bg-opacity-95 py-3">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-opacity-95 py-3">
       <div class="container">
         <a class="navbar-brand" href="#"><i class="fas fa-masks-theater"></i></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav">
             <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="#gallery">Gallery</a></li>
             <li class="nav-item"><a class="nav-link" href="#resume">Resume</a></li>
           </ul>
+          <button id="theme-toggle" class="btn btn-outline-secondary ms-auto">
+            <i id="theme-icon" class="fas fa-sun"></i>
+          </button>
         </div>
       </div>
     </nav>
@@ -52,14 +68,19 @@
             <h1 class="display-1 fw-bold text-uppercase mb-0">Maddox</h1>
             <h1 class="display-3 fw-normal text-uppercase mb-4">Bierman</h1>
           </div>
-          <div class="lead bio ms-auto" style="max-width: 600px;">
-            <p class="text-secondary mb-3">A dynamic senior at Collierville High School, Maddox has been captivating
-              audiences since the age of seven. His versatility shines through his performances in principal roles,
-              ensemble work, and featured dance numbers.</p>
-            <p class="text-secondary">His theatrical journey spans productions with New Day Children's Theatre,
+          <div class="bio ms-auto" style="max-width: 600px;">
+            <p class="text-secondary mb-3">
+              A dynamic senior at Collierville High School, Maddox has been captivating audiences since the age of
+              seven.
+              His versatility shines through his performances in principal roles, ensemble work, and featured dance
+              numbers.
+            </p>
+            <p class="text-secondary">
+              His theatrical journey spans productions with New Day Children's Theatre,
               Collierville High School, West Collierville Middle School, and the Collierville Arts Council. Beyond
               performing, Maddox dedicates his time to mentoring young talent at New Day Children's Theatre, sharing his
-              passion and inspiring the next generation of performers.</p>
+              passion and inspiring the next generation of performers.
+            </p>
           </div>
         </div>
       </div>
@@ -70,7 +91,7 @@
   </section>
 
   <!-- Gallery Section -->
-  <section id="gallery" class="py-5 bg-light mt-5">
+  <section id="gallery" class="py-5 bg-body-secondary mt-5">
     <div class="container">
       <h2 class="display-4 text-center mb-5">Gallery</h2>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
@@ -128,6 +149,7 @@
     <div class="container">
       <h2 class="display-4 text-center mb-5">Resume</h2>
       <div class="row g-4">
+        <!-- Training -->
         <div class="col-lg-6">
           <div class="card h-100">
             <div class="card-body">
@@ -137,14 +159,14 @@
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
                     <h3>MCPAPS Vocal Coaching</h3>
-                    <p>Nathan McHenry & Brooke Papritz</p>
+                    <p>Nathan McHenry &amp; Brooke Papritz</p>
                   </div>
                 </li>
                 <li>
-                  <div class="experience-year">2022</div>
+                  <div class="experience-year">2022–2025</div>
                   <div class="experience-details">
                     <h3>Collierville High School</h3>
-                    <p>Acting, Theatre Production, Musical Theatre &mdash; 2025</p>
+                    <p>Acting, Theatre Production, Musical Theatre</p>
                   </div>
                 </li>
                 <li>
@@ -155,16 +177,18 @@
                   </div>
                 </li>
                 <li>
-                  <div class="experience-year">2014</div>
+                  <div class="experience-year">2014–Present</div>
                   <div class="experience-details">
                     <h3>New Day Children's Theatre</h3>
-                    <p>Various camps and classes &mdash; Present</p>
+                    <p>Various camps and classes</p>
                   </div>
                 </li>
               </ul>
             </div>
           </div>
         </div>
+
+        <!-- Experience -->
         <div class="col-lg-6">
           <div class="card h-100">
             <div class="card-body">
@@ -173,105 +197,105 @@
                 <li>
                   <div class="experience-year">2025</div>
                   <div class="experience-details">
-                    <h3>Legally Blonde - Kyle</h3>
+                    <h3>Legally Blonde – Kyle</h3>
                     <p>Draco Playhouse</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
-                    <h3>Stranger Sings - Dr Brenner</h3>
+                    <h3>Stranger Sings – Dr Brenner</h3>
                     <p>Draco Playhouse</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
-                    <h3>Harry Potter and The Cursed Child - Ron Weasley</h3>
+                    <h3>Harry Potter and The Cursed Child – Ron Weasley</h3>
                     <p>Draco Playhouse</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
-                    <h3>Rudolph the Red Nosed Reindeer - Coach Comet</h3>
+                    <h3>Rudolph the Red-Nosed Reindeer – Coach Comet</h3>
                     <p>Collierville Arts Council</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
-                    <h3>Madagascar JR - Ship Captain/Ensemble</h3>
+                    <h3>Madagascar JR – Ship Captain/Ensemble</h3>
                     <p>Draco Playhouse</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
-                    <h3>Dirty Rotten Scoundrels - Featured Ensemble Dancer</h3>
+                    <h3>Dirty Rotten Scoundrels – Featured Ensemble Dancer</h3>
                     <p>Draco Playhouse</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2024</div>
                   <div class="experience-details">
-                    <h3>Anything Goes - Fred/Featured Dancer</h3>
+                    <h3>Anything Goes – Fred/Featured Dancer</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2023</div>
                   <div class="experience-details">
-                    <h3>Merrily We Roll Along - TV Newsman/Ensemble</h3>
+                    <h3>Merrily We Roll Along – TV Newsman/Ensemble</h3>
                     <p>Draco Playhouse</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2023</div>
                   <div class="experience-details">
-                    <h3>Mean Girls - Coach Carr/Optimus Prime</h3>
+                    <h3>Mean Girls – Coach Carr/Optimus Prime</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2022</div>
                   <div class="experience-details">
-                    <h3>The Lightning Thief - Poseidon/Train Conductor</h3>
+                    <h3>The Lightning Thief – Poseidon/Train Conductor</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2022</div>
                   <div class="experience-details">
-                    <h3>Drowsy Chaperone - Ensemble</h3>
+                    <h3>Drowsy Chaperone – Ensemble</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2021</div>
                   <div class="experience-details">
-                    <h3>Les Miserables - Legles/Major Domo</h3>
+                    <h3>Les Misérables – Legles/Major Domo</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2020</div>
                   <div class="experience-details">
-                    <h3>High School Musical JR - Jack Scott</h3>
+                    <h3>High School Musical JR – Jack Scott</h3>
                     <p>West Collierville Middle School</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2019</div>
                   <div class="experience-details">
-                    <h3>Adams Family - Death/Ancestor</h3>
+                    <h3>Addams Family – Death/Ancestor</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
                 <li>
                   <div class="experience-year">2018</div>
                   <div class="experience-details">
-                    <h3>Spamalot - Guard 2/Ensemble</h3>
+                    <h3>Spamalot – Guard 2/Ensemble</h3>
                     <p>New Day Children's Theatre</p>
                   </div>
                 </li>
@@ -284,23 +308,38 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-light py-4">
+  <footer class="py-4 bg-body-secondary">
     <div class="container">
       <p class="text-center text-muted mb-0">&copy; 2025 Maddox Bierman. All rights reserved.</p>
     </div>
   </footer>
 
-  <!-- Bootstrap JS -->
+  <!-- Bootstrap JS Bundle (includes Collapse) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Nav toggle script -->
+  <!-- Theme toggle script -->
   <script>
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    navToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
-    document.querySelectorAll('nav ul li a')
-      .forEach(link => link.addEventListener('click', () => navLinks.classList.remove('active')));
+    document.addEventListener('DOMContentLoaded', () => {
+      const btn = document.getElementById('theme-toggle');
+      const icon = document.getElementById('theme-icon');
+      const root = document.documentElement;
+
+      function updateIcon() {
+        const mode = root.getAttribute('data-bs-theme');
+        icon.classList.toggle('fa-sun', mode === 'dark');
+        icon.classList.toggle('fa-moon', mode === 'light');
+      }
+
+      updateIcon();
+      btn.addEventListener('click', () => {
+        const current = root.getAttribute('data-bs-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-bs-theme', next);
+        updateIcon();
+      });
+    });
   </script>
+
 </body>
 
 </html>

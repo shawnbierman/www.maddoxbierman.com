@@ -1,16 +1,91 @@
-@font-face {
-  font-family: 'Font Awesome 6 Free';
-  font-style: normal;
-  font-weight: 900;
-  src: url("webfonts/fa-solid-900.woff2") format("woff2");
+/* Custom properties */
+:root {
+  --text-color: #222;
+  --secondary-text-color: #666;
 }
 
-.fas {
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
-  font-style: normal;
+/* Fonts */
+.ff-oswald {
+  font-family: 'Oswald', sans-serif;
 }
 
-.fa-masks-theater:before {
-  content: "\f630";
+/* Hero image */
+.hero-img {
+  max-height: 72vh;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+/* Resume styles */
+.experience-list li {
+  display: flex;
+  margin-bottom: 1.5rem;
+  gap: 2rem;
+}
+
+.experience-year {
+  font-weight: bold;
+  min-width: 4rem;
+  color: var(--text-color);
+}
+
+.experience-details h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.experience-details p {
+  margin: 0.25rem 0 0;
+  color: var(--secondary-text-color);
+  font-size: 0.95rem;
+}
+
+/* Gallery styles */
+#gallery .card {
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+#gallery .card:hover {
+  transform: translateY(-5px);
+}
+
+#gallery .card-img-top {
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+/* Section scroll margin */
+section[id] {
+  scroll-margin-top: 80px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .hero-img {
+    max-height: 45vh;
+    opacity: 0.2;
+  }
+
+  .experience-list li {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .experience-year {
+    margin-bottom: 0.25rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hero-img {
+    max-height: 60vh;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  #home {
+    padding-top: 90px;
+  }
 }
