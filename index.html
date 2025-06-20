@@ -388,42 +388,8 @@
   <!-- PhotoSwipe JS -->
   <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.umd.min.js"></script>
 
-  <!-- PhotoSwipe Gallery Script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize PhotoSwipe
-      const galleryGrid = document.getElementById('gallery-grid');
-
-      if (galleryGrid) {
-        galleryGrid.addEventListener('click', (e) => {
-          e.preventDefault();
-
-          const clickedLink = e.target.closest('a');
-          if (!clickedLink) return;
-
-          const allLinks = Array.from(galleryGrid.querySelectorAll('a'));
-          const index = allLinks.indexOf(clickedLink);
-
-          const dataSource = allLinks.map(link => ({
-            src: link.href,
-            width: parseInt(link.dataset.pswpWidth) || 800,
-            height: parseInt(link.dataset.pswpHeight) || 1200,
-            alt: link.querySelector('img').alt
-          }));
-
-          const lightbox = new PhotoSwipe({
-            dataSource,
-            index,
-            showHideAnimationType: 'zoom',
-            bgOpacity: 0.9,
-            padding: { top: 20, bottom: 40, left: 100, right: 100 }
-          });
-
-          lightbox.init();
-        });
-      }
-    });
-  </script>
+  <!-- PhotoSwipe Gallery Initialization -->
+  <script src="j/photoswipe-gallery.js"></script>
 
   <!-- Theme toggle script -->
   <script>
