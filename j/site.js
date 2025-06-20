@@ -16,79 +16,79 @@
 
     let imageFiles = [];
 
-    try {
-      // Try to load from gallery index first (most reliable)
-      const indexResponse = await fetch('i/gallery/index.json');
-      if (indexResponse.ok) {
-        imageFiles = await indexResponse.json();
-        console.log('Loaded gallery images from index.json');
-      }
-    } catch (error) {
-      console.log('No gallery index found, trying directory listing...');
-      
+    // Fallback image list for file:// protocol or when fetch fails
+    const fallbackImages = [
+      "maddoxbierman1.jpg",
+      "maddoxbierman2.jpg",
+      "maddoxbierman3.jpg",
+      "maddoxbierman4.jpg",
+      "maddoxbierman5.jpg",
+      "maddoxbierman7.jpg",
+      "maddoxbierman8.jpg",
+      "maddoxbierman9.jpg",
+    ];
+
+    // Check if we're running on file:// protocol
+    const isFileProtocol = window.location.protocol === "file:";
+
+    if (isFileProtocol) {
+      console.log("File protocol detected, using fallback image list");
+      imageFiles = fallbackImages;
+    } else {
       try {
-        // Try to fetch the gallery directory listing
-        const response = await fetch('i/gallery/');
-        const html = await response.text();
-        
-        // Parse HTML to find .jpg files
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const links = doc.querySelectorAll('a[href$=".jpg"]');
-        
-        // Extract filenames from the links
-        imageFiles = Array.from(links)
-          .map(link => link.getAttribute('href'))
-          .filter(href => href.endsWith('.jpg'))
-          .sort(); // Sort alphabetically
-
-        console.log('Loaded gallery images from directory listing');
-      } catch (dirError) {
-        console.log('Directory listing failed, using fallback...');
-      }
-    }
-
-    // If no images found yet, use fallback list
-    if (imageFiles.length === 0) {
-      console.log('Using fallback image list');
-      const fallbackImages = [
-        'maddoxbierman1.jpg',
-        'maddoxbierman2.jpg', 
-        'maddoxbierman3.jpg',
-        'maddoxbierman4.jpg',
-        'maddoxbierman5.jpg',
-        'maddoxbierman7.jpg',
-        'maddoxbierman8.jpg',
-        'maddoxbierman9.jpg'
-      ];
-      
-      // Verify which images actually exist
-      for (const filename of fallbackImages) {
-        try {
-          const testResponse = await fetch(`i/gallery/${filename}`, { method: 'HEAD' });
-          if (testResponse.ok) {
-            imageFiles.push(filename);
-          }
-        } catch (e) {
-          // Image doesn't exist, skip it
+        // Try to load from gallery index first (most reliable for HTTP)
+        const indexResponse = await fetch("i/gallery/index.json");
+        if (indexResponse.ok) {
+          imageFiles = await indexResponse.json();
+          console.log("Loaded gallery images from index.json");
         }
+      } catch (error) {
+        console.log("No gallery index found, trying directory listing...");
+
+        try {
+          // Try to fetch the gallery directory listing
+          const response = await fetch("i/gallery/");
+          const html = await response.text();
+
+          // Parse HTML to find .jpg files
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, "text/html");
+          const links = doc.querySelectorAll('a[href$=".jpg"]');
+
+          // Extract filenames from the links
+          imageFiles = Array.from(links)
+            .map((link) => link.getAttribute("href"))
+            .filter((href) => href.endsWith(".jpg"))
+            .sort(); // Sort alphabetically
+
+          console.log("Loaded gallery images from directory listing");
+        } catch (dirError) {
+          console.log("Directory listing failed, using fallback...");
+          imageFiles = fallbackImages;
+        }
+      }
+
+      // If still no images found, use fallback
+      if (imageFiles.length === 0) {
+        console.log("Using fallback image list");
+        imageFiles = fallbackImages;
       }
     }
 
     // Create gallery items with varied sizes for mosaic layout
-    const sizeClasses = ['large', 'medium', 'small', 'wide', 'tall'];
-    
+    const sizeClasses = ["large", "medium", "small", "wide", "tall"];
+
     imageFiles.forEach((filename, index) => {
-      const galleryItem = document.createElement('div');
+      const galleryItem = document.createElement("div");
       const sizeClass = sizeClasses[index % sizeClasses.length];
       galleryItem.className = `gallery-item ${sizeClass}`;
-      
+
       galleryItem.innerHTML = `
         <a href="i/gallery/${filename}" data-pswp-width="800" data-pswp-height="1200" target="_blank">
           <img src="i/gallery/${filename}" alt="Maddox Bierman Performance" loading="lazy">
         </a>
       `;
-      
+
       galleryGrid.appendChild(galleryItem);
     });
 
@@ -195,7 +195,7 @@
    */
   async function init() {
     await loadGalleryImages(); // Load gallery images first
-    initPhotoSwipeGallery();   // Then initialize PhotoSwipe
+    initPhotoSwipeGallery(); // Then initialize PhotoSwipe
     initThemeToggle();
     initSmoothScrolling();
   }
