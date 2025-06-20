@@ -3,39 +3,39 @@
  * Handles all custom functionality including gallery, theme toggle, and other interactions
  */
 
-(function() {
-  'use strict';
+(function () {
+  "use strict";
 
   /**
    * PhotoSwipe Gallery Functionality
    * Initializes lightbox gallery for performance images
    */
   function initPhotoSwipeGallery() {
-    const galleryGrid = document.getElementById('gallery-grid');
+    const galleryGrid = document.getElementById("gallery-grid");
 
     if (galleryGrid) {
-      galleryGrid.addEventListener('click', (e) => {
+      galleryGrid.addEventListener("click", (e) => {
         e.preventDefault();
 
-        const clickedLink = e.target.closest('a');
+        const clickedLink = e.target.closest("a");
         if (!clickedLink) return;
 
-        const allLinks = Array.from(galleryGrid.querySelectorAll('a'));
+        const allLinks = Array.from(galleryGrid.querySelectorAll("a"));
         const index = allLinks.indexOf(clickedLink);
 
-        const dataSource = allLinks.map(link => ({
+        const dataSource = allLinks.map((link) => ({
           src: link.href,
           width: parseInt(link.dataset.pswpWidth) || 800,
           height: parseInt(link.dataset.pswpHeight) || 1200,
-          alt: link.querySelector('img').alt
+          alt: link.querySelector("img").alt,
         }));
 
         const lightbox = new PhotoSwipe({
           dataSource,
           index,
-          showHideAnimationType: 'zoom',
+          showHideAnimationType: "zoom",
           bgOpacity: 0.9,
-          padding: { top: 20, bottom: 40, left: 100, right: 100 }
+          padding: { top: 20, bottom: 40, left: 100, right: 100 },
         });
 
         lightbox.init();
@@ -48,30 +48,30 @@
    * Handles light/dark mode switching
    */
   function initThemeToggle() {
-    const btn = document.getElementById('theme-toggle');
+    const btn = document.getElementById("theme-toggle");
     const root = document.documentElement;
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
     function setTheme(theme) {
-      root.setAttribute('data-bs-theme', theme);
+      root.setAttribute("data-bs-theme", theme);
     }
 
     // Set initial theme based on user preference
-    setTheme(prefersDark.matches ? 'dark' : 'light');
+    setTheme(prefersDark.matches ? "dark" : "light");
 
     // Handle manual theme toggle
     if (btn) {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener("click", (e) => {
         e.preventDefault();
-        const current = root.getAttribute('data-bs-theme');
-        const next = current === 'light' ? 'dark' : 'light';
+        const current = root.getAttribute("data-bs-theme");
+        const next = current === "light" ? "dark" : "light";
         setTheme(next);
       });
     }
 
     // Handle system theme changes
-    prefersDark.addEventListener('change', (e) => {
-      setTheme(e.matches ? 'dark' : 'light');
+    prefersDark.addEventListener("change", (e) => {
+      setTheme(e.matches ? "dark" : "light");
     });
   }
 
@@ -81,17 +81,17 @@
    */
   function initSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-    
-    navLinks.forEach(link => {
-      link.addEventListener('click', (e) => {
+
+    navLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
         e.preventDefault();
-        const targetId = link.getAttribute('href');
+        const targetId = link.getAttribute("href");
         const targetElement = document.querySelector(targetId);
-        
+
         if (targetElement) {
           targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
+            behavior: "smooth",
+            block: "start",
           });
         }
       });
@@ -108,10 +108,9 @@
   }
 
   // Initialize when DOM is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
   } else {
     init();
   }
-
 })();
