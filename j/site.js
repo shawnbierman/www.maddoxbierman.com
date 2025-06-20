@@ -7,80 +7,28 @@
   "use strict";
 
   /**
-   * Dynamic Gallery Loading
-   * Automatically discovers and loads all .jpg images from i/gallery directory
+   * Static Gallery Loading
+   * Hard-coded gallery images for reliable loading across all browsers
    */
-  async function loadGalleryImages() {
+  function loadGalleryImages() {
     const galleryGrid = document.getElementById("gallery-grid");
     if (!galleryGrid) {
       console.error("Gallery grid element not found");
       return;
     }
 
-    console.log("Starting gallery image loading...");
-    console.log("Current protocol:", window.location.protocol);
-    console.log("Current host:", window.location.host);
-
-    let imageFiles = [];
-
-    // Fallback image list for file:// protocol or when fetch fails
-    const fallbackImages = [
+    // Hard-coded image list
+    const imageFiles = [
       "maddoxbierman1.jpg",
       "maddoxbierman2.jpg",
       "maddoxbierman3.jpg",
       "maddoxbierman4.jpg",
       "maddoxbierman5.jpg",
+      "maddoxbierman6.jpg",
       "maddoxbierman7.jpg",
       "maddoxbierman8.jpg",
       "maddoxbierman9.jpg",
     ];
-
-    // Check if we're running on file:// protocol
-    const isFileProtocol = window.location.protocol === "file:";
-
-    if (isFileProtocol) {
-      console.log("File protocol detected, using fallback image list");
-      imageFiles = fallbackImages;
-    } else {
-      try {
-        // Try to load from gallery index first (most reliable for HTTP)
-        const indexResponse = await fetch("i/gallery/index.json");
-        if (indexResponse.ok) {
-          imageFiles = await indexResponse.json();
-          console.log("Loaded gallery images from index.json");
-        }
-      } catch (error) {
-        console.log("No gallery index found, trying directory listing...");
-
-        try {
-          // Try to fetch the gallery directory listing
-          const response = await fetch("i/gallery/");
-          const html = await response.text();
-
-          // Parse HTML to find .jpg files
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, "text/html");
-          const links = doc.querySelectorAll('a[href$=".jpg"]');
-
-          // Extract filenames from the links
-          imageFiles = Array.from(links)
-            .map((link) => link.getAttribute("href"))
-            .filter((href) => href.endsWith(".jpg"))
-            .sort(); // Sort alphabetically
-
-          console.log("Loaded gallery images from directory listing");
-        } catch (dirError) {
-          console.log("Directory listing failed, using fallback...");
-          imageFiles = fallbackImages;
-        }
-      }
-
-      // If still no images found, use fallback
-      if (imageFiles.length === 0) {
-        console.log("Using fallback image list");
-        imageFiles = fallbackImages;
-      }
-    }
 
     // Create gallery items with varied sizes for mosaic layout
     const sizeClasses = ["large", "medium", "small", "wide", "tall"];
@@ -91,22 +39,12 @@
       galleryItem.className = `gallery-item ${sizeClass}`;
 
       const img = document.createElement("img");
-      img.src = `i/gallery/${filename}`;
+      img.src = `i/${filename}`;
       img.alt = "Maddox Bierman Performance";
       img.loading = "lazy";
 
-      // Add error handling for images
-      img.onerror = function () {
-        console.error(`Failed to load image: ${filename}`);
-        this.style.display = "none";
-      };
-
-      img.onload = function () {
-        console.log(`Successfully loaded image: ${filename}`);
-      };
-
       const link = document.createElement("a");
-      link.href = `i/gallery/${filename}`;
+      link.href = `i/${filename}`;
       link.setAttribute("data-pswp-width", "800");
       link.setAttribute("data-pswp-height", "1200");
       link.setAttribute("target", "_blank");
@@ -217,8 +155,8 @@
   /**
    * Initialize all functionality when DOM is ready
    */
-  async function init() {
-    await loadGalleryImages(); // Load gallery images first
+  function init() {
+    loadGalleryImages(); // Load gallery images first
     initPhotoSwipeGallery(); // Then initialize PhotoSwipe
     initThemeToggle();
     initSmoothScrolling();
