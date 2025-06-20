@@ -13,7 +13,7 @@
   function initPhotoSwipeGallery() {
     const galleryGrid = document.getElementById("gallery-grid");
 
-    if (galleryGrid && typeof PhotoSwipe !== 'undefined') {
+    if (galleryGrid && window.PhotoSwipe) {
       galleryGrid.addEventListener("click", (e) => {
         e.preventDefault();
 
@@ -30,7 +30,7 @@
           alt: link.querySelector("img").alt,
         }));
 
-        const lightbox = new PhotoSwipe({
+        const lightbox = new window.PhotoSwipe({
           dataSource,
           index,
           showHideAnimationType: "zoom",

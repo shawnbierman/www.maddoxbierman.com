@@ -19,7 +19,7 @@
     rel="stylesheet">
 
   <!-- PhotoSwipe CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.css">
+  <link rel="stylesheet" href="s/photoswipe.css">
 
   <!-- Main Styles -->
   <link rel="stylesheet" href="s/styles.css">
@@ -386,7 +386,10 @@
   <script src="j/bootstrap.bundle.min.js"></script>
 
   <!-- PhotoSwipe JS -->
-  <script src="https://unpkg.com/photoswipe@5.4.4/dist/photoswipe.umd.min.js"></script>
+  <script type="module">
+    import PhotoSwipe from './j/photoswipe.min.js';
+    window.PhotoSwipe = PhotoSwipe;
+  </script>
 
   <!-- Custom Site JavaScript -->
   <script src="j/site.js"></script>
