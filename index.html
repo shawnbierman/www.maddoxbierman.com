@@ -388,34 +388,8 @@
   <!-- PhotoSwipe JS -->
   <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.umd.min.js"></script>
 
-  <!-- PhotoSwipe Gallery Initialization -->
-  <script src="j/photoswipe-gallery.js"></script>
-
-  <!-- Theme toggle script -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const btn = document.getElementById('theme-toggle');
-      const root = document.documentElement;
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-      function setTheme(theme) {
-        root.setAttribute('data-bs-theme', theme);
-      }
-
-      setTheme(prefersDark.matches ? 'dark' : 'light');
-
-      btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const current = root.getAttribute('data-bs-theme');
-        const next = current === 'light' ? 'dark' : 'light';
-        setTheme(next);
-      });
-
-      prefersDark.addEventListener('change', (e) => {
-        setTheme(e.matches ? 'dark' : 'light');
-      });
-    });
-  </script>
+  <!-- Custom Site JavaScript -->
+  <script src="j/site.js"></script>
 
 </body>
 
