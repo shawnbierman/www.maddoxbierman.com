@@ -18,6 +18,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap"
     rel="stylesheet">
 
+  <!-- PhotoSwipe CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.css">
+
   <!-- Main Styles -->
   <link rel="stylesheet" href="s/styles.css">
 
@@ -95,50 +98,95 @@
   <section id="gallery" class="py-5 bg-body-secondary mt-5">
     <div class="container">
       <h2 class="display-4 text-center mb-4">Gallery</h2>
-      <div class="row">
+      <div class="row" id="gallery-grid">
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman1.jpg" alt="Gallery image 1" loading="lazy">
+            <a href="i/maddoxbierman1.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman1.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman2.jpg" alt="Gallery image 2" loading="lazy">
+            <a href="i/maddoxbierman2.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman2.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman4.jpg" alt="Gallery image 4" loading="lazy">
+            <a href="i/maddoxbierman4.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman4.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman5.jpg" alt="Gallery image 5" loading="lazy">
+            <a href="i/maddoxbierman5.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman5.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman6.jpg" alt="Gallery image 6" loading="lazy">
+            <a href="i/maddoxbierman6.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman6.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman8.jpg" alt="Gallery image 8" loading="lazy">
+            <a href="i/maddoxbierman8.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman8.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman9.jpg" alt="Gallery image 9" loading="lazy">
+            <a href="i/maddoxbierman9.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman9.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman7.jpg" alt="Gallery image 7" loading="lazy">
+            <a href="i/maddoxbierman7.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman7.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
         <div class="col-6 col-md-4 col-lg-3">
           <div class="gallery-item">
-            <img src="i/maddoxbierman3.jpg" alt="Gallery image 3" loading="lazy">
+            <a href="i/maddoxbierman3.jpg" 
+               data-pswp-width="800" 
+               data-pswp-height="1200" 
+               target="_blank">
+              <img src="i/maddoxbierman3.jpg" alt="Maddox Bierman Performance" loading="lazy">
+            </a>
           </div>
         </div>
       </div>
@@ -381,6 +429,46 @@
 
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- PhotoSwipe JS -->
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.umd.min.js"></script>
+
+  <!-- PhotoSwipe Gallery Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize PhotoSwipe
+      const galleryGrid = document.getElementById('gallery-grid');
+      
+      if (galleryGrid) {
+        galleryGrid.addEventListener('click', (e) => {
+          e.preventDefault();
+          
+          const clickedLink = e.target.closest('a');
+          if (!clickedLink) return;
+          
+          const allLinks = Array.from(galleryGrid.querySelectorAll('a'));
+          const index = allLinks.indexOf(clickedLink);
+          
+          const dataSource = allLinks.map(link => ({
+            src: link.href,
+            width: parseInt(link.dataset.pswpWidth) || 800,
+            height: parseInt(link.dataset.pswpHeight) || 1200,
+            alt: link.querySelector('img').alt
+          }));
+          
+          const lightbox = new PhotoSwipe({
+            dataSource,
+            index,
+            showHideAnimationType: 'zoom',
+            bgOpacity: 0.9,
+            padding: { top: 20, bottom: 40, left: 100, right: 100 }
+          });
+          
+          lightbox.init();
+        });
+      }
+    });
+  </script>
 
   <!-- Theme toggle script -->
   <script>
