@@ -7,6 +7,95 @@
   "use strict";
 
   /**
+   * Dynamic Gallery Loading
+   * Automatically discovers and loads all .jpg images from i/gallery directory
+   */
+  async function loadGalleryImages() {
+    const galleryGrid = document.getElementById("gallery-grid");
+    if (!galleryGrid) return;
+
+    let imageFiles = [];
+
+    try {
+      // Try to load from gallery index first (most reliable)
+      const indexResponse = await fetch('i/gallery/index.json');
+      if (indexResponse.ok) {
+        imageFiles = await indexResponse.json();
+        console.log('Loaded gallery images from index.json');
+      }
+    } catch (error) {
+      console.log('No gallery index found, trying directory listing...');
+      
+      try {
+        // Try to fetch the gallery directory listing
+        const response = await fetch('i/gallery/');
+        const html = await response.text();
+        
+        // Parse HTML to find .jpg files
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const links = doc.querySelectorAll('a[href$=".jpg"]');
+        
+        // Extract filenames from the links
+        imageFiles = Array.from(links)
+          .map(link => link.getAttribute('href'))
+          .filter(href => href.endsWith('.jpg'))
+          .sort(); // Sort alphabetically
+
+        console.log('Loaded gallery images from directory listing');
+      } catch (dirError) {
+        console.log('Directory listing failed, using fallback...');
+      }
+    }
+
+    // If no images found yet, use fallback list
+    if (imageFiles.length === 0) {
+      console.log('Using fallback image list');
+      const fallbackImages = [
+        'maddoxbierman1.jpg',
+        'maddoxbierman2.jpg', 
+        'maddoxbierman3.jpg',
+        'maddoxbierman4.jpg',
+        'maddoxbierman5.jpg',
+        'maddoxbierman7.jpg',
+        'maddoxbierman8.jpg',
+        'maddoxbierman9.jpg'
+      ];
+      
+      // Verify which images actually exist
+      for (const filename of fallbackImages) {
+        try {
+          const testResponse = await fetch(`i/gallery/${filename}`, { method: 'HEAD' });
+          if (testResponse.ok) {
+            imageFiles.push(filename);
+          }
+        } catch (e) {
+          // Image doesn't exist, skip it
+        }
+      }
+    }
+
+    // Create gallery items with varied sizes for mosaic layout
+    const sizeClasses = ['large', 'medium', 'small', 'wide', 'tall'];
+    
+    imageFiles.forEach((filename, index) => {
+      const galleryItem = document.createElement('div');
+      const sizeClass = sizeClasses[index % sizeClasses.length];
+      galleryItem.className = `gallery-item ${sizeClass}`;
+      
+      galleryItem.innerHTML = `
+        <a href="i/gallery/${filename}" data-pswp-width="800" data-pswp-height="1200" target="_blank">
+          <img src="i/gallery/${filename}" alt="Maddox Bierman Performance" loading="lazy">
+        </a>
+      `;
+      
+      galleryGrid.appendChild(galleryItem);
+    });
+
+    console.log(`Loaded ${imageFiles.length} images into gallery`);
+  }
+
+  /**
    * PhotoSwipe Gallery Functionality
    * Initializes lightbox gallery for performance images
    */
@@ -104,8 +193,9 @@
   /**
    * Initialize all functionality when DOM is ready
    */
-  function init() {
-    initPhotoSwipeGallery();
+  async function init() {
+    await loadGalleryImages(); // Load gallery images first
+    initPhotoSwipeGallery();   // Then initialize PhotoSwipe
     initThemeToggle();
     initSmoothScrolling();
   }
