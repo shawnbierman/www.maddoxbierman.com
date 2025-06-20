@@ -12,7 +12,14 @@
    */
   async function loadGalleryImages() {
     const galleryGrid = document.getElementById("gallery-grid");
-    if (!galleryGrid) return;
+    if (!galleryGrid) {
+      console.error("Gallery grid element not found");
+      return;
+    }
+
+    console.log("Starting gallery image loading...");
+    console.log("Current protocol:", window.location.protocol);
+    console.log("Current host:", window.location.host);
 
     let imageFiles = [];
 
@@ -83,12 +90,29 @@
       const sizeClass = sizeClasses[index % sizeClasses.length];
       galleryItem.className = `gallery-item ${sizeClass}`;
 
-      galleryItem.innerHTML = `
-        <a href="i/gallery/${filename}" data-pswp-width="800" data-pswp-height="1200" target="_blank">
-          <img src="i/gallery/${filename}" alt="Maddox Bierman Performance" loading="lazy">
-        </a>
-      `;
+      const img = document.createElement("img");
+      img.src = `i/gallery/${filename}`;
+      img.alt = "Maddox Bierman Performance";
+      img.loading = "lazy";
 
+      // Add error handling for images
+      img.onerror = function () {
+        console.error(`Failed to load image: ${filename}`);
+        this.style.display = "none";
+      };
+
+      img.onload = function () {
+        console.log(`Successfully loaded image: ${filename}`);
+      };
+
+      const link = document.createElement("a");
+      link.href = `i/gallery/${filename}`;
+      link.setAttribute("data-pswp-width", "800");
+      link.setAttribute("data-pswp-height", "1200");
+      link.setAttribute("target", "_blank");
+      link.appendChild(img);
+
+      galleryItem.appendChild(link);
       galleryGrid.appendChild(galleryItem);
     });
 
