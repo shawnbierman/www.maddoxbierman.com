@@ -13,7 +13,7 @@
   function initPhotoSwipeGallery() {
     const galleryGrid = document.getElementById("gallery-grid");
 
-    if (galleryGrid) {
+    if (galleryGrid && typeof PhotoSwipe !== "undefined") {
       galleryGrid.addEventListener("click", (e) => {
         e.preventDefault();
 
@@ -40,6 +40,9 @@
 
         lightbox.init();
       });
+    } else if (galleryGrid) {
+      // Fallback: retry after a short delay if PhotoSwipe isn't loaded yet
+      setTimeout(() => initPhotoSwipeGallery(), 100);
     }
   }
 
