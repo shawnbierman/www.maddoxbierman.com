@@ -17,36 +17,36 @@
       return;
     }
 
-    // Hard-coded image list
+    // Hard-coded image list with actual dimensions
     const imageFiles = [
-      "maddoxbierman1.jpg",
-      "maddoxbierman2.jpg",
-      "maddoxbierman3.jpg",
-      "maddoxbierman4.jpg",
-      "maddoxbierman5.jpg",
-      "maddoxbierman6.jpg",
-      "maddoxbierman7.jpg",
-      "maddoxbierman8.jpg",
-      "maddoxbierman9.jpg",
+      { filename: "maddoxbierman1.jpg", width: 933, height: 1399 },
+      { filename: "maddoxbierman2.jpg", width: 867, height: 1300 },
+      { filename: "maddoxbierman3.jpg", width: 1500, height: 1000 },
+      { filename: "maddoxbierman4.jpg", width: 867, height: 1300 },
+      { filename: "maddoxbierman5.jpg", width: 795, height: 1300 },
+      { filename: "maddoxbierman6.jpg", width: 800, height: 1200 },
+      { filename: "maddoxbierman7.jpg", width: 667, height: 1000 },
+      { filename: "maddoxbierman8.jpg", width: 1133, height: 1300 },
+      { filename: "maddoxbierman9.jpg", width: 800, height: 1200 },
     ];
 
     // Create gallery items with varied sizes for mosaic layout
     const sizeClasses = ["large", "medium", "small", "wide", "tall"];
 
-    imageFiles.forEach((filename, index) => {
+    imageFiles.forEach((imageData, index) => {
       const galleryItem = document.createElement("div");
       const sizeClass = sizeClasses[index % sizeClasses.length];
       galleryItem.className = `gallery-item ${sizeClass}`;
 
       const img = document.createElement("img");
-      img.src = `i/${filename}`;
+      img.src = `i/${imageData.filename}`;
       img.alt = "Maddox Bierman Performance";
       img.loading = "lazy";
 
       const link = document.createElement("a");
-      link.href = `i/${filename}`;
-      link.setAttribute("data-pswp-width", "800");
-      link.setAttribute("data-pswp-height", "1200");
+      link.href = `i/${imageData.filename}`;
+      link.setAttribute("data-pswp-width", imageData.width.toString());
+      link.setAttribute("data-pswp-height", imageData.height.toString());
       link.setAttribute("target", "_blank");
       link.appendChild(img);
 
@@ -87,6 +87,14 @@
           showHideAnimationType: "zoom",
           bgOpacity: 0.9,
           padding: { top: 20, bottom: 40, left: 100, right: 100 },
+          imageClickAction: "close",
+          tapAction: "close",
+          doubleTapAction: "zoom",
+          preloadFirstSlide: true,
+          allowPanToNext: false,
+          initialZoomLevel: "fit",
+          secondaryZoomLevel: 1.5,
+          maxZoomLevel: 2,
         });
 
         lightbox.init();
