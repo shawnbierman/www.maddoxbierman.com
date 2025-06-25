@@ -19,15 +19,60 @@
 
     // Hard-coded image list with actual dimensions
     const imageFiles = [
-      { filename: "maddoxbierman1.jpg", width: 933, height: 1399 },
-      { filename: "maddoxbierman2.jpg", width: 867, height: 1300 },
-      { filename: "maddoxbierman3.jpg", width: 1500, height: 1000 },
-      { filename: "maddoxbierman4.jpg", width: 867, height: 1300 },
-      { filename: "maddoxbierman5.jpg", width: 795, height: 1300 },
-      { filename: "maddoxbierman6.jpg", width: 800, height: 1200 },
-      { filename: "maddoxbierman7.jpg", width: 667, height: 1000 },
-      { filename: "maddoxbierman8.jpg", width: 1133, height: 1300 },
-      { filename: "maddoxbierman9.jpg", width: 800, height: 1200 },
+      {
+        filename: "maddoxbierman1.jpg",
+        width: 933,
+        height: 1399,
+        thumb: "maddoxbierman1-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman2.jpg",
+        width: 867,
+        height: 1300,
+        thumb: "maddoxbierman2-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman3.jpg",
+        width: 1500,
+        height: 1000,
+        thumb: "maddoxbierman3-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman4.jpg",
+        width: 867,
+        height: 1300,
+        thumb: "maddoxbierman4-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman5.jpg",
+        width: 795,
+        height: 1300,
+        thumb: "maddoxbierman5-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman6.jpg",
+        width: 800,
+        height: 1200,
+        thumb: "maddoxbierman6-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman7.jpg",
+        width: 667,
+        height: 1000,
+        thumb: "maddoxbierman7-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman8.jpg",
+        width: 1133,
+        height: 1300,
+        thumb: "maddoxbierman8-thumb.jpg",
+      },
+      {
+        filename: "maddoxbierman9.jpg",
+        width: 800,
+        height: 1200,
+        thumb: "maddoxbierman9-thumb.jpg",
+      },
     ];
 
     // Create gallery items with varied sizes for mosaic layout
@@ -38,17 +83,43 @@
       const sizeClass = sizeClasses[index % sizeClasses.length];
       galleryItem.className = `gallery-item ${sizeClass}`;
 
+      const picture = document.createElement("picture");
+
+      // Create WebP source with srcset
+      const webpSource = document.createElement("source");
+      webpSource.type = "image/webp";
+      webpSource.srcset = `
+        i/thumbnails/${imageData.thumb.replace(".jpg", ".webp")} 200w,
+        i/${imageData.filename.replace(".jpg", "-small.webp")} 400w,
+        i/${imageData.filename.replace(".jpg", "-medium.webp")} 800w,
+        i/${imageData.filename.replace(".jpg", "-large.webp")} 1200w
+      `;
+      webpSource.sizes =
+        "(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px";
+
+      // Create fallback img element with JPEG srcset
       const img = document.createElement("img");
-      img.src = `i/${imageData.filename}`;
+      img.src = `i/thumbnails/${imageData.thumb}`; // Fallback src
+      img.srcset = `
+        i/thumbnails/${imageData.thumb} 200w,
+        i/${imageData.filename.replace(".jpg", "-small.jpg")} 400w,
+        i/${imageData.filename.replace(".jpg", "-medium.jpg")} 800w,
+        i/${imageData.filename.replace(".jpg", "-large.jpg")} 1200w
+      `;
+      img.sizes = "(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px";
       img.alt = "Maddox Bierman Performance";
       img.loading = "lazy";
+
+      picture.appendChild(webpSource);
+      picture.appendChild(img);
 
       const link = document.createElement("a");
       link.href = `i/${imageData.filename}`;
       link.setAttribute("data-pswp-width", imageData.width.toString());
       link.setAttribute("data-pswp-height", imageData.height.toString());
+      link.setAttribute("data-pswp-msrc", `i/thumbnails/${imageData.thumb}`); // Thumbnail for PhotoSwipe opening animation
       link.setAttribute("target", "_blank");
-      link.appendChild(img);
+      link.appendChild(picture);
 
       galleryItem.appendChild(link);
       galleryGrid.appendChild(galleryItem);
@@ -78,6 +149,7 @@
           src: link.href,
           width: parseInt(link.dataset.pswpWidth) || 800,
           height: parseInt(link.dataset.pswpHeight) || 1200,
+          msrc: link.dataset.pswpMsrc, // Add msrc for PhotoSwipe's opening animation
           alt: link.querySelector("img").alt,
         }));
 
