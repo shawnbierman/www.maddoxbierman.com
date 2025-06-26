@@ -7,6 +7,33 @@
   "use strict";
 
   /**
+   * Determines the appropriate `sizes` attribute for an image based on its gallery class.
+   * @param {string} sizeClass The mosaic size class (e.g., 'large', 'medium').
+   * @returns {string} The corresponding `sizes` attribute value.
+   */
+  function getSizesForClass(sizeClass) {
+    switch (sizeClass) {
+      case "large":
+      case "wide":
+        // These items span 2 grid columns.
+        // - On screens < 768px, the grid has 2 columns, so this is ~100vw.
+        // - On screens > 768px, we estimate it takes up ~50% of the viewport width.
+        return "(max-width: 768px) 95vw, 50vw";
+      case "tall":
+      case "medium":
+      case "small":
+        // These items span 1 grid column.
+        // - On screens < 480px, the grid has 1 column, so this is ~100vw.
+        // - On screens 480px-768px, the grid has 2 columns, so this is ~50vw.
+        // - On screens > 768px, we estimate it takes up ~25% of the viewport width.
+        return "(max-width: 480px) 95vw, (max-width: 768px) 45vw, 25vw";
+      default:
+        // Fallback for any unexpected class.
+        return "100vw";
+    }
+  }
+
+  /**
    * Static Gallery Loading
    * Hard-coded gallery images for reliable loading across all browsers
    */
@@ -84,6 +111,7 @@
       galleryItem.className = `gallery-item ${sizeClass}`;
 
       const picture = document.createElement("picture");
+      const imageSizes = getSizesForClass(sizeClass);
 
       // Create WebP source with srcset
       const webpSource = document.createElement("source");
@@ -94,8 +122,7 @@
         i/${imageData.filename.replace(".jpg", "-medium.webp")} 800w,
         i/${imageData.filename.replace(".jpg", "-large.webp")} 1200w
       `;
-      webpSource.sizes =
-        "(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px";
+      webpSource.sizes = imageSizes;
 
       // Create fallback img element with JPEG srcset
       const img = document.createElement("img");
@@ -106,7 +133,7 @@
         i/${imageData.filename.replace(".jpg", "-medium.jpg")} 800w,
         i/${imageData.filename.replace(".jpg", "-large.jpg")} 1200w
       `;
-      img.sizes = "(max-width: 600px) 400px, (max-width: 1200px) 800px, 1200px";
+      img.sizes = imageSizes;
       img.alt = "Maddox Bierman Performance";
       img.loading = "lazy";
 
